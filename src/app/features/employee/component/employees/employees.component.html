@@ -1,2 +1,179 @@
-<p>employees works!</p>
-<h5>kddk</h5>
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Employee List</h1>
+  
+    <!-- Search and Add Employee -->
+    <div class="mb-4 flex justify-between items-center">
+      <button
+        class="bg-blue-500 text-white p-2 rounded"
+        (click)="toggleFilter()"
+      >
+        {{ showFilter ? 'Hide' : 'Show' }} Filters
+      </button>
+      <button
+        (click)="showAddEmployeeForm = true"
+        class="bg-green-500 text-white p-2 rounded"
+      >
+        Add Employee
+      </button>
+    </div>
+  
+    <!-- Collapsible Filter Section -->
+    <div
+      *ngIf="showFilter"
+      class="border p-4 rounded mb-4 transition-all duration-300 "
+    >
+    <div class="flex space-x-5 mb-5">
+      <div class="mb-4">
+        <input
+          [(ngModel)]="filterCriteria.firstName"
+          placeholder="Search by First Name"
+          class="p-2 border rounded w-64"
+        />
+      </div>
+      <div class="mb-4">
+        <input
+          [(ngModel)]="filterCriteria.lastName"
+          placeholder="Search by Last Name"
+          class="p-2 border rounded w-64"
+        />
+      </div>
+      <div class="mb-4">
+        <input
+          [(ngModel)]="filterCriteria.email"
+          placeholder="Search by Email"
+          class="p-2 border rounded w-64"
+        />
+      </div>
+    </div>
+  
+      <!-- Age Range Filter -->
+      <div class="flex space-x-36 mb-4">
+
+      <div class="flex space-x-4 mb-4">
+        <input
+          [(ngModel)]="filterCriteria.minAge"
+          type="number"
+          placeholder="Min Age"
+          class="p-2 border rounded w-32"
+        />
+        <input
+          [(ngModel)]="filterCriteria.maxAge"
+          type="number"
+          placeholder="Max Age"
+          class="p-2 border rounded w-32"
+        />
+      </div>
+  
+      <!-- Salary Range Filter -->
+      <div class="flex space-x-4 mb-4">
+        <input
+          [(ngModel)]="filterCriteria.minSalary"
+          type="number"
+          placeholder="Min Salary"
+          class="p-2 border rounded w-32"
+        />
+        <input
+          [(ngModel)]="filterCriteria.maxSalary"
+          type="number"
+          placeholder="Max Salary"
+          class="p-2 border rounded w-32"
+        />
+        </div>
+      </div>
+  
+      
+      
+  
+      <!-- Search Button -->
+      <div class="text-right">
+        <button
+          (click)="filterEmployees()"
+          class="bg-blue-500 text-white p-2 rounded"
+        >
+          Search
+        </button>
+      </div>
+
+      
+    </div>
+  
+
+       
+      
+    
+      
+  
+    <!-- Employee Table -->
+    <table class="w-full border-collapse border">
+      <thead>
+        <tr>
+            @for (column of ['firstName', 'lastName', 'email', 'age', 'salary', 'dob', 'address', 'contact Number'];track column)
+            {
+                <th 
+                (click)="sortData(column)"
+                class="p-2 bg-gray-200 cursor-pointer">
+              {{ column | titlecase }}
+              <span *ngIf="sortColumn === column">
+                {{ sortDirection === 'asc' ? '▲' : '▼' }}
+              </span>
+            </th>
+            }
+         
+          <th class="p-2 bg-gray-200">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (employee of paginatedEmployees;track employee)
+        {
+            <tr  class="hover:bg-gray-100">
+                <td class="p-2 border">{{ employee?.firstName }}</td>
+                <td class="p-2 border">{{ employee?.lastName }}</td>
+                <td class="p-2 border">{{ employee?.email }}</td>
+                <td class="p-2 border">{{ employee?.age }}</td>
+                <td class="p-2 border">{{ employee?.salary | currency:'USD':'symbol':'1.0-0' }}</td>
+                <td class="p-2 border">{{ employee?.dob  }}</td>
+                <td class="p-2 border">{{ employee?.address }}</td>
+                <td class="p-2 border">{{ employee?.contactNumber }}</td>
+                <td class="p-2 border">
+                  <button (click)="deleteEmployee(employee.id)" class="bg-red-500 text-white p-1 rounded">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+        }
+        
+      </tbody>
+    </table>
+  
+    @if (filteredEmployees.length === 0)
+    {
+        <div  class="text-center py-4">
+            No employees found.
+          </div>
+    }
+    
+  
+    <div class="mt-4 flex justify-between items-center">
+      <div>
+        @for (page of [].constructor(totalPages);track page;)
+        {
+            <button
+          
+          (click)="changePage($index + 1)"
+          [class.bg-blue-500]="currentPage === $index + 1"
+          [class.text-white]="currentPage === $index + 1"
+          class="mr-2 px-3 py-1 border rounded"
+        >
+          {{ $index + 1 }}
+        </button>
+    }
+      </div>
+      <div>
+        <select [(ngModel)]="pageSize" (change)="changePageSize(pageSize)" class="p-2 border rounded">
+          <option [value]="10">10 per page</option>
+          <option [value]="20">20 per page</option>
+          <option [value]="50">50 per page</option>
+        </select>
+      </div>
+    </div>
+</div>
