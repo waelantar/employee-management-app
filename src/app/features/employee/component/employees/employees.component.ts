@@ -123,4 +123,28 @@ export class EmployeesComponent {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.filteredEmployees.slice(startIndex, startIndex + this.pageSize);
   }
+  pagesAroundCurrent(): number[] {
+    const maxVisiblePages = 5; // Number of pages to show around the current page
+    const pages = [];
+
+    // Determine the start and end pages to show
+    const start = Math.max(2, this.currentPage - Math.floor(maxVisiblePages / 2));
+    const end = Math.min(this.totalPages - 1, this.currentPage + Math.floor(maxVisiblePages / 2));
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
+  // Whether to show the ellipsis before the current page
+  shouldShowLeftEllipsis(): boolean {
+    return this.currentPage > 3;
+  }
+
+  // Whether to show the ellipsis after the current page
+  shouldShowRightEllipsis(): boolean {
+    return this.currentPage < this.totalPages - 2;
+  }
 }
