@@ -1,0 +1,16 @@
+<div class="mt-4 flex justify-between items-center">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="bg-blue-500 text-white px-3 py-1 rounded">Previous</button>
+    @for (page of [].constructor(totalPages); track $index) {
+    <div >
+      <button (click)="changePage($index+1)" [class.bg-blue-500]="currentPage === ($index+1)" [class.text-white]="currentPage === ($index+1)" class="px-3 py-1 border rounded">
+        {{ $index + 1 }}
+      </button>
+    </div>}
+
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="bg-blue-500 text-white px-3 py-1 rounded">Next</button>
+    <select [(ngModel)]="pageSize" (change)="changePageSize(pageSize)" class="p-2 border rounded">
+      <option [value]="10">10 per page</option>
+      <option [value]="20">20 per page</option>
+      <option [value]="50">50 per page</option>
+    </select>
+  </div>

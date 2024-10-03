@@ -1,0 +1,120 @@
+<div class="p-4">
+  <h2 class="text-lg font-semibold mb-4">Add Employee</h2>
+  <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)">
+    <div class="mb-4">
+      <label class="block text-gray-700">First Name</label>
+      <input
+        type="text"
+        [(ngModel)]="firstName"
+        name="firstName"
+        class="mt-1 block w-full border rounded-md p-2"
+        required
+        #firstNameField="ngModel"
+      />
+      @if (firstNameField.invalid && firstNameField.touched) {
+        <div class="text-red-500 text-sm">
+          First name is required.
+        </div>
+      }
+     
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700">Last Name</label>
+      <input
+        type="text"
+        [(ngModel)]="lastName"
+        name="lastName"
+        class="mt-1 block w-full border rounded-md p-2"
+        required
+        #lastNameField="ngModel"
+      />
+      @if (lastNameField.invalid && lastNameField.touched) {
+        <div  class="text-red-500 text-sm">
+          Last name is required.
+        </div>
+      }
+      
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700">Email</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        class="mt-1 block w-full border rounded-md p-2"
+        required
+        email
+        #emailField="ngModel"
+      />
+      @if(emailField.invalid && emailField.touched){
+        <div class="text-red-500 text-sm">
+          Please enter a valid email.
+        </div>
+      }
+   
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700">Age</label>
+      <input
+        type="number"
+        [(ngModel)]="age"
+        name="age"
+        class="mt-1 block w-full border rounded-md p-2"
+        required
+        min="18"
+        max="65"
+        #ageField="ngModel"
+      />
+      @if (ageField.invalid && ageField.touched) {
+        <div  class="text-red-500 text-sm">
+          Age must be between 18 and 65.
+        </div>
+      }
+    
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700">Salary</label>
+      <input
+        type="number"
+        [(ngModel)]="salary"
+        name="salary"
+        class="mt-1 block w-full border rounded-md p-2"
+        required
+        min="1000"
+        #salaryField="ngModel"
+      />
+      @if(salaryField.invalid && salaryField.touched){
+        <div class="text-red-500 text-sm">
+          Salary must be at least 1000.
+        </div>
+      }
+     
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700">Date of Birth</label>
+      <input
+        type="date"
+        [(ngModel)]="dob"
+        name="dob"
+        class="mt-1 block w-full border rounded-md p-2"
+        required
+        #dobField="ngModel"
+      />
+      @if (dobField.invalid && dobField.touched) {
+        <div  class="text-red-500 text-sm">
+          Date of Birth is required.
+        </div>
+      }
+      
+    </div>
+
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded" [disabled]="employeeForm.invalid">
+      Add Employee
+    </button>
+  </form>
+</div>

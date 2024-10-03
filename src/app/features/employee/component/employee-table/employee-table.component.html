@@ -1,0 +1,41 @@
+<table class="w-full border-collapse border">
+    <thead>
+      <tr>
+        @for(column of ['firstName', 'lastName', 'email', 'age', 'salary', 'dob', 'address', 'contactNumber'];track column)
+        { <th 
+          (click)="handleSort(column)" class="p-2 bg-gray-200 cursor-pointer">
+        {{ column | titlecase }}
+        @if(sortColumn === column)
+        {
+          <span >
+            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+          </span>
+        }
+       
+      </th>
+
+        }
+       
+        <th class="p-2 bg-gray-200">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for( employee of employees;track employee){
+        <tr class="hover:bg-gray-100">
+          <td class="p-2 border">{{ employee.firstName }}</td>
+          <td class="p-2 border">{{ employee.lastName }}</td>
+          <td class="p-2 border">{{ employee.email }}</td>
+          <td class="p-2 border">{{ employee.age }}</td>
+          <td class="p-2 border">{{ employee.salary | currency:'USD':'symbol':'1.0-0' }}</td>
+          <td class="p-2 border">{{ employee.dob }}</td>
+          <td class="p-2 border">{{ employee.address }}</td>
+          <td class="p-2 border">{{ employee.contactNumber }}</td>
+          <td class="p-2 border">
+            <button (click)="handleDelete(employee.id)" class="bg-red-500 text-white p-1 rounded">Delete</button>
+          </td>
+        </tr>
+      }
+      
+    </tbody>
+  </table>
+  

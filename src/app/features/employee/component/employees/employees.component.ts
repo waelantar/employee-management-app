@@ -3,15 +3,20 @@ import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../../../core/models/employee.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AddEmployeeModalComponent } from '../add-employee-modal/add-employee-modal.component';
+import { EmployeeFiltersComponent } from '../employee-filters/employee-filters.component';
+import { EmployeeTableComponent } from '../employee-table/employee-table.component';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-employees',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule, AddEmployeeModalComponent,EmployeeFiltersComponent,EmployeeTableComponent,PaginationComponent],
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.scss'
 })
 export class EmployeesComponent {
+
   employees: Employee[] = [];
   filteredEmployees: Employee[] = [];
   pageSize = 10;
@@ -21,15 +26,10 @@ export class EmployeesComponent {
   sortColumn = '';
   sortDirection = 'asc';
   showAddEmployeeForm = false;
-  filterCriteria = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    minAge: null,
-    maxAge: null,
-    minSalary: null,
-    maxSalary: null,
-  };
+  page: number = 1; // For pagination
+  totalEmployees: number = 0; // Total number of employees
+  showAddModal: boolean = false; // To control the visibility of the Add Employee modal
+
   showFilter = false;
   constructor(private employeeService: EmployeeService) { }
 
@@ -86,20 +86,21 @@ export class EmployeesComponent {
     this.showFilter = !this.showFilter;
   }
   
-  filterEmployees() {
+  filterEmployees(filterCriteria:any) {
+    console.log(filterCriteria)
     this.filteredEmployees = this.employees.filter((employee) => {
       // Filter by first name, last name, and email
-      const firstNameMatch = !this.filterCriteria.firstName || employee.firstName?.toLowerCase().includes(this.filterCriteria.firstName.toLowerCase());
-      const lastNameMatch = !this.filterCriteria.lastName || employee.lastName?.toLowerCase().includes(this.filterCriteria.lastName.toLowerCase());
-      const emailMatch = !this.filterCriteria.email || employee.email?.toLowerCase().includes(this.filterCriteria.email.toLowerCase());
+      const firstNameMatch = !filterCriteria.firstName || employee.firstName?.toLowerCase().includes(filterCriteria.firstName.toLowerCase());
+      const lastNameMatch = !filterCriteria.lastName || employee.lastName?.toLowerCase().includes(filterCriteria.lastName.toLowerCase());
+      const emailMatch = !filterCriteria.email || employee.email?.toLowerCase().includes(filterCriteria.email.toLowerCase());
   
       // Filter by age range
-      const ageMatch = (!this.filterCriteria.minAge || employee.age >= this.filterCriteria.minAge) &&
-                       (!this.filterCriteria.maxAge || employee.age <= this.filterCriteria.maxAge);
+      const ageMatch = (!filterCriteria.minAge || employee.age >= filterCriteria.minAge) &&
+                       (!filterCriteria.maxAge || employee.age <= filterCriteria.maxAge);
   
       // Filter by salary range
-      const salaryMatch = (!this.filterCriteria.minSalary || employee.salary >= this.filterCriteria.minSalary) &&
-                          (!this.filterCriteria.maxSalary || employee.salary <= this.filterCriteria.maxSalary);
+      const salaryMatch = (!filterCriteria.minSalary || employee.salary >= filterCriteria.minSalary) &&
+                          (!filterCriteria.maxSalary || employee.salary <= filterCriteria.maxSalary);
   
   
       // Combine all filters
@@ -111,13 +112,10 @@ export class EmployeesComponent {
 
   deleteEmployee(id: number) {
     this.employees = this.employees.filter((employee) => employee.id !== id);
-    this.filterEmployees();
+    this.updatePagination();
   }
 
-  addEmployee(employee: Employee) {
-    this.employees.push(employee);
-    this.filterEmployees();
-  }
+ 
 
   get paginatedEmployees() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
@@ -146,5 +144,21 @@ export class EmployeesComponent {
   // Whether to show the ellipsis after the current page
   shouldShowRightEllipsis(): boolean {
     return this.currentPage < this.totalPages - 2;
+  }
+  openAddEmployeeModal() {
+    this.showAddEmployeeForm = true;
+  }
+
+ 
+
+  // Function to handle the added employee
+  handleEmployeeAdded(newEmployee: any) {
+    console.log(newEmployee);
+    this.employees.push(newEmployee); 
+    this.filteredEmployees = [...this.employees]; 
+    this.showAddEmployeeForm = false;
+  }
+  onPageChange(page: number) {
+    this.page = page; // Update current page
   }
 }

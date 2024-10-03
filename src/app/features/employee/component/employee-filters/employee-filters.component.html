@@ -1,0 +1,15 @@
+<div class="border p-4 rounded mb-4 transition-all duration-300">
+    <div class="flex space-x-5 mb-5">
+      <input [(ngModel)]="filterCriteria.firstName" placeholder="First Name" class="p-2 border rounded w-64" />
+      <input [(ngModel)]="filterCriteria.lastName" placeholder="Last Name" class="p-2 border rounded w-64" />
+      <input [(ngModel)]="filterCriteria.email" placeholder="Email" class="p-2 border rounded w-64" />
+    </div>
+    <div class="flex space-x-4 mb-4">
+      <input [(ngModel)]="filterCriteria.minAge" type="number" placeholder="Min Age" class="p-2 border rounded w-32" />
+      <input [(ngModel)]="filterCriteria.maxAge" type="number" placeholder="Max Age" class="p-2 border rounded w-32" />
+      <input [(ngModel)]="filterCriteria.minSalary" type="number" placeholder="Min Salary" class="p-2 border rounded w-32" />
+      <input [(ngModel)]="filterCriteria.maxSalary" type="number" placeholder="Max Salary" class="p-2 border rounded w-32" />
+    </div>
+    <button (click)="applyFilter()" class="bg-blue-500 text-white p-2 rounded">Search</button>
+  </div>
+  
