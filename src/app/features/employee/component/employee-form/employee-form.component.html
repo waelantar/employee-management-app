@@ -1,13 +1,12 @@
 <div class="p-4">
-  <h2 class="text-lg font-semibold mb-4">Add Employee</h2>
   <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)">
     <div class="mb-4">
-      <label class="block text-gray-700">First Name</label>
       <input
         type="text"
         [(ngModel)]="firstName"
         name="firstName"
-        class="mt-1 block w-full border rounded-md p-2"
+        placeholder="First Name"
+        class="p-2 border border-[#1e3a8a] rounded w-full sm:w-full bg-[#010729] text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent"
         required
         #firstNameField="ngModel"
       />
@@ -20,12 +19,12 @@
     </div>
 
     <div class="mb-4">
-      <label class="block text-gray-700">Last Name</label>
       <input
         type="text"
         [(ngModel)]="lastName"
         name="lastName"
-        class="mt-1 block w-full border rounded-md p-2"
+        placeholder="Last Name"
+        class="p-2 border border-[#1e3a8a] rounded w-full sm:w-full bg-[#010729] text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent"
         required
         #lastNameField="ngModel"
       />
@@ -38,12 +37,12 @@
     </div>
 
     <div class="mb-4">
-      <label class="block text-gray-700">Email</label>
       <input
         type="email"
         [(ngModel)]="email"
         name="email"
-        class="mt-1 block w-full border rounded-md p-2"
+        placeholder="Email address"
+        class="p-2 border border-[#1e3a8a] rounded w-full sm:w-full bg-[#010729] text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent"
         required
         email
         #emailField="ngModel"
@@ -57,12 +56,12 @@
     </div>
 
     <div class="mb-4">
-      <label class="block text-gray-700">Age</label>
       <input
         type="number"
         [(ngModel)]="age"
         name="age"
-        class="mt-1 block w-full border rounded-md p-2"
+        placeholder="Age"
+        class="p-2 border border-[#1e3a8a] rounded w-full sm:w-full bg-[#010729] text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent"
         required
         min="18"
         max="65"
@@ -77,12 +76,12 @@
     </div>
 
     <div class="mb-4">
-      <label class="block text-gray-700">Salary</label>
       <input
         type="number"
         [(ngModel)]="salary"
         name="salary"
-        class="mt-1 block w-full border rounded-md p-2"
+        placeholder="Salary"
+        class="p-2 border border-[#1e3a8a] rounded w-full sm:w-full bg-[#010729] text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent "
         required
         min="1000"
         #salaryField="ngModel"
@@ -96,12 +95,12 @@
     </div>
 
     <div class="mb-4">
-      <label class="block text-gray-700">Date of Birth</label>
       <input
         type="date"
         [(ngModel)]="dob"
         name="dob"
-        class="mt-1 block w-full border rounded-md p-2"
+        placeholder="Date of Birth"
+        class="p-2 border border-[#1e3a8a] rounded w-full sm:w-full bg-[#010729] text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:border-transparent"
         required
         #dobField="ngModel"
       />
@@ -113,7 +112,13 @@
       
     </div>
 
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded" [disabled]="employeeForm.invalid">
+   
+    <button type="submit" 
+           class="justify-center border-solid border-2 border-white hover:border-[#ce573e] hover:text-[#ce573e] text-white p-2 rounded-md hover:from-[#2563eb] hover:to-[#10b981] transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-opacity-50 flex items-center " [disabled]="employeeForm.invalid">
+       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+      </svg>
+    
       Add Employee
     </button>
   </form>

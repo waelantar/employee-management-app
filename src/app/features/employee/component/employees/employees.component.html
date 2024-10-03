@@ -1,56 +1,74 @@
-<div class="container mx-auto p-4">
-  <h1 class="text-2xl font-bold mb-4">Employee List</h1>
-
+<div class=" p-4 sm:p-6 lg:p-8 bg-gradient-to-t from-[#293578] to-[#010729] min-h-screen text-gray-200">
+  <app-navbar></app-navbar>
+  
   <!-- Search and Add Employee -->
-  <div class="mb-4 flex justify-between items-center">
+  <div class="mb-4 sm:mb-6 flex flex-row sm:flex-row items-center sm:items-center sm:justify-end justify-end space-x-4 sm:space-y-0 sm:space-x-4">
     <button
-      class="bg-blue-500 text-white p-2 rounded"
+      class="w-auto border-solid border-2 border-white hover:border-[#ce573e] hover:text-[#ce573e] text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-opacity-50 flex items-center justify-center"
       (click)="toggleFilter()"
     >
-      {{ showFilter ? 'Hide' : 'Show' }} Filters
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+      </svg>
+      <span class="sr-only">{{ showFilter ? 'Hide' : 'Show' }} Filters</span>
     </button>
-    <div>
-      <button (click)="openAddEmployeeModal()" class="bg-blue-500 text-white px-4 py-2 rounded">Add Employee</button>
-      
-      <!-- Modal for Adding Employee -->
-       @if (showAddEmployeeForm){
-        <app-add-employee-modal 
-        (Employee)="handleEmployeeAdded($event)" 
-        (closeModal)="showAddEmployeeForm = false">
-      </app-add-employee-modal>
-       }
-      
-  </div>
+
+    <button 
+      (click)="openAddEmployeeModal()" 
+      class="w-auto border-solid border-2 border-white hover:border-[#ce573e] hover:text-[#ce573e] text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#34d399] focus:ring-opacity-50 flex items-center justify-center"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+      </svg>
+      <span class="sr-only">Add Employee</span>
+    </button>
+</div>
+
+
+
+  <!-- Modal for Adding Employee -->
+  @if (showAddEmployeeForm) {
+    <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+      <div class="bg-[#05113a] p-4 sm:p-6 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto text-white">
+        <app-add-employee-modal
+          (Employee)="handleEmployeeAdded($event)"
+          (closeModal)="showAddEmployeeForm = false">
+        </app-add-employee-modal>
+      </div>
+    </div>
+  }
 
   <!-- Collapsible Filter Section -->
-   @if (showFilter) {
-    <app-employee-filters (filterEmployees)="filterEmployees($event)"></app-employee-filters>
-
-   }
-  
-
-<!-- Employee Table -->
-<app-employee-table 
-    [employees]="filteredEmployees.slice((page - 1) * pageSize, page * pageSize)">
-  </app-employee-table>
-
-  @if (filteredEmployees.length === 0)
-  {
-      <div  class="text-center py-4">
-          No employees found.
-        </div>
+  @if (showFilter) {
+    <div class="mb-4 sm:mb-6 bg-[#05113a] p-4 rounded-lg shadow-md transition-all duration-300 ease-in-out border border-[#1e3a8a]">
+      <app-employee-filters (filterEmployees)="filterEmployees($event)"></app-employee-filters>
+    </div>
   }
-  
-  <app-pagination 
-  [totalPages]="totalPages" 
-  [pageSize]="pageSize" 
-  [currentPage]="page" 
-  (pageChange)="onPageChange($event)"
-  (pageSizeChange)="changePageSize($event)">
-</app-pagination>
 
-   
-    
-   
+  <!-- Employee Table -->
+  <div class="bg-[#05113a] rounded-lg shadow-md overflow-x-auto border border-[#1e3a8a]">
+    <app-employee-table
+      [employees]="filteredEmployees.slice((page - 1) * pageSize, page * pageSize)"
+      (sortData)="sortedData($event)"
+      >
+    </app-employee-table>
+
+    @if (filteredEmployees.length === 0) {
+      <div class="text-center py-8 text-[#94a3b8]">
+        <i class="fas fa-user-slash mb-2 text-4xl"></i>
+        <p>No employees found.</p>
+      </div>
+    }
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-4 sm:mt-6">
+    <app-pagination
+      [totalPages]="totalPages"
+      [pageSize]="pageSize"
+      [currentPage]="page"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="changePageSize($event)">
+    </app-pagination>
   </div>
 </div>

@@ -19,6 +19,7 @@ export class AddEmployeeModalComponent {
     this.closeModal.emit();
   }
   handleEmployeeAdded(Employee: any) {
+
     this.Employee.emit(Employee);
 
 this.close()  }

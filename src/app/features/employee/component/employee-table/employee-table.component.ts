@@ -12,16 +12,18 @@ import { CommonModule } from '@angular/common';
 })
 export class EmployeeTableComponent {
   @Input() employees: Employee[] = [];
-  @Input() sortColumn: string = '';
-  @Input() sortDirection: string = '';
+   sortColumn: string = '';
+   sortDirection: string = '';
   @Output() deleteEmployee = new EventEmitter<number>();
   @Output() sortData = new EventEmitter<string>();
 
   handleDelete(id: number) {
     this.deleteEmployee.emit(id);
   }
+  
 
   handleSort(column: string) {
+    this.sortColumn=column;
     this.sortData.emit(column);
   }
 }

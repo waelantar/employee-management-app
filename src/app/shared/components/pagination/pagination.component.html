@@ -1,16 +1,78 @@
-<div class="mt-4 flex justify-between items-center">
-    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="bg-blue-500 text-white px-3 py-1 rounded">Previous</button>
-    @for (page of [].constructor(totalPages); track $index) {
-    <div >
-      <button (click)="changePage($index+1)" [class.bg-blue-500]="currentPage === ($index+1)" [class.text-white]="currentPage === ($index+1)" class="px-3 py-1 border rounded">
-        {{ $index + 1 }}
-      </button>
-    </div>}
-
-    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="bg-blue-500 text-white px-3 py-1 rounded">Next</button>
-    <select [(ngModel)]="pageSize" (change)="changePageSize(pageSize)" class="p-2 border rounded">
-      <option [value]="10">10 per page</option>
-      <option [value]="20">20 per page</option>
-      <option [value]="50">50 per page</option>
+<div class="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+  <!-- Page Size Selector -->
+  <div class="flex items-center space-x-2">
+    <label for="pageSize" class="text-gray-200">Show:</label>
+    <select 
+      id="pageSize"
+      [(ngModel)]="pageSize" 
+      (change)="changePageSize(pageSize)" 
+      class="bg-[#05113a] text-gray-200 border border-[#1e3a8a] rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-opacity-50"
+    >
+      <option [value]="10">10</option>
+      <option [value]="20">20</option>
+      <option [value]="50">50</option>
     </select>
   </div>
+
+  <!-- Pagination Controls -->
+  <div class="flex items-center space-x-2">
+    <!-- Previous Page Button -->
+    <button 
+      (click)="changePage(currentPage - 1)" 
+      [disabled]="currentPage === 1" 
+      class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+      </svg>
+    </button>
+    
+    <!-- Page Numbers -->
+    <div class="flex items-center space-x-1">
+      @for(page of getVisiblePages();track page)
+      {
+@if($first && showEndEllipsis()) {
+  <button 
+  (click)="changePage(2)" 
+  class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out"
+>
+  ...
+</button>
+}
+<button 
+(click)="changePage(page)" 
+[class.bg-[#293578]]="currentPage === page" 
+class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out"
+>
+{{ page }}
+</button>
+@if ($last && showEndEllipsis()) {
+  <button 
+              (click)="changePage(totalPages - 1)" 
+              class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out"
+            >
+              ...
+            </button>
+}
+
+      }
+      
+    </div>
+    
+    <!-- Next Page Button -->
+    <button 
+      (click)="changePage(currentPage + 1)" 
+      [disabled]="currentPage === totalPages" 
+      class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Page Information -->
+  <div class="text-gray-200">
+    Page {{ currentPage }} of {{ totalPages }}
+  </div>
+</div>
