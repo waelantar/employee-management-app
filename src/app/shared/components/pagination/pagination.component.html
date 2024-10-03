@@ -18,6 +18,7 @@
   <div class="flex items-center space-x-2">
     <!-- Previous Page Button -->
     <button 
+    aria-label="previous"
       (click)="changePage(currentPage - 1)" 
       [disabled]="currentPage === 1" 
       class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
@@ -33,6 +34,7 @@
       {
 @if($first && showEndEllipsis()) {
   <button 
+  aria-label="first"
   (click)="changePage(2)" 
   class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out"
 >
@@ -40,6 +42,8 @@
 </button>
 }
 <button 
+aria-label="Current"
+
 (click)="changePage(page)" 
 [class.bg-[#293578]]="currentPage === page" 
 class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out"
@@ -48,6 +52,8 @@ class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578
 </button>
 @if ($last && showEndEllipsis()) {
   <button 
+  aria-label="last"
+
               (click)="changePage(totalPages - 1)" 
               class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out"
             >
@@ -61,6 +67,8 @@ class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578
     
     <!-- Next Page Button -->
     <button 
+    aria-label="Next"
+
       (click)="changePage(currentPage + 1)" 
       [disabled]="currentPage === totalPages" 
       class="border border-[#1e3a8a] text-gray-200 px-3 py-1 rounded hover:bg-[#293578] transition duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"

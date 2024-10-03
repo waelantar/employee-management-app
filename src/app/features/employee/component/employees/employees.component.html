@@ -5,6 +5,7 @@
   <div class="mb-4 sm:mb-6 flex flex-row sm:flex-row items-center sm:items-center sm:justify-end justify-end space-x-4 sm:space-y-0 sm:space-x-4">
     <button
       class="w-auto border-solid border-2 border-white hover:border-[#ce573e] hover:text-[#ce573e] text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-opacity-50 flex items-center justify-center"
+      arial-label="filters"
       (click)="toggleFilter()"
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -15,6 +16,7 @@
 
     <button 
       (click)="openAddEmployeeModal()" 
+      aria-label="Add Employee"
       class="w-auto border-solid border-2 border-white hover:border-[#ce573e] hover:text-[#ce573e] text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#34d399] focus:ring-opacity-50 flex items-center justify-center"
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
